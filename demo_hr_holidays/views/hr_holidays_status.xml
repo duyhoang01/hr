@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_holiday_status_normal_tree_inherit" model="ir.ui.view">
+            <field name="name">hr.holidays.status.normal.tree.inherit</field>
+            <field name="model">hr.holidays.status</field>
+            <field name="inherit_id" ref="hr_holidays.view_holiday_status_normal_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//tree" position="inside">
+                    <field name="color_name"/>
+                    <field name="double_validation"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

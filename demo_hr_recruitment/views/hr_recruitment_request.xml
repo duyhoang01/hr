@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--<search string="Recruitment request">-->
+            <!--<field name="name" string="Recruitment request" filter_domain="[('name','ilike',self)]"/>-->
+            <!--<field name="department_id"/>-->
+            <!--<field name="state"/>-->
+            <!--<field name="job_id"/>-->
+            <!--&lt;!&ndash;<filter string="Draft" name="message_needaction" domain="[('state','=','draft')]"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<filter string="Waiting for approval" name="message_needaction" domain="[('state','=','waiting_for_approval')]"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>&ndash;&gt;-->
+            <!--<filter string="Archived" name="inactive" domain="[('active','=',False)]"/>-->
+            <!--&lt;!&ndash;<group expand="0" string="Group By">&ndash;&gt;-->
+                <!--&lt;!&ndash;<filter name="group_department" string="Department" domain="[]" context="{'group_by':'department_id'}"/>&ndash;&gt;-->
+                <!--&lt;!&ndash;<filter name="group_job" string="Job" domain="[]" context="{'group_by':'job_id'}"/>&ndash;&gt;-->
+                <!--&lt;!&ndash;<filter name="group_company" string="Company" domain="[]" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;</group>&ndash;&gt;-->
+        <!--</search>-->
+
+        <record id="hr_recruitment_request_form_view" model="ir.ui.view">
+            <field name="name">hr_recruitment_request_form_view</field>
+            <field name="model">hr.request</field>
+            <field name="arch" type="xml">
+                <form string="Recruitment request">
+                    <header>
+                        <button string="Submit" name="action_submit" type="object" class="oe_highlight" attrs="{'invisible': ['|',('state', '!=', 'draft')]}"/>
+                        <button string="Approve" name="action_approve" type="object" class="oe_highlight" attrs="{'invisible': ['|',('state', '!=', 'waiting_for_approval')]}"/>
+                        <button string="Refuse" name="action_refuse" type="object" attrs="{'invisible': ['|',('state', '!=', 'waiting_for_approval')]}"/>
+                        <button string="Set to draft" name="action_set_to_draft" type="object" attrs="{'invisible': ['|',('state', '!=', 'waiting_for_approval')]}"/>
+                        <button string="Set to done" name="action_set_to_done" type="object" attrs="{'invisible': ['|',('state', '!=', 'process')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,waiting_for_approval,approved,process,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="department_id"/>
+                                <field name="job_id"/>
+                                <field name="number_of_recruited"/>
+                            </group>
+                            <group>
+                                <field name="number_of_recruits"/>
+                                <field name="date_needs"/>
+                                <field name="request_by"/>
+                                <field name="type_id"/>
+                            </group>
+                        </group>
+                        <div class="oe_title">
+                            <label for="reason" class="oe_edit_only"/>
+                            <h1><field name="reason"/></h1>
+                        </div>
+                        <notebook>
+                            <page string="General information" id="general_information">
+                                <group>
+                                    <field name="job_description"/>
+                                    <field name="job_requirements"/>
+                                </group>
+                            </page>
+                            <page string="Applications">
+                                <group>
+                                    <field name="application_ids"/>
+                                </group>
+                            </page>
+                            <!--<page name="inherit_children" string="Inherited Views">-->
+                                <!--<field name="inherit_children_ids" context="{'default_model':model,'default_type':type,'default_inherit_id':active_id,'default_mode':'extension'}">-->
+                                    <!--<tree default_order="priority,id">-->
+                                        <!--<field name="id"/>-->
+                                        <!--<field name="priority"/>-->
+                                        <!--<field name="name"/>-->
+                                        <!--<field name="xml_id"/>-->
+                                    <!--</tree>-->
+                                <!--</field>-->
+                            <!--</page>-->
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="hr_recruitment_request_tree_view" model="ir.ui.view">
+            <field name="name">Recruitment request</field>
+            <field name="model">hr.request</field>
+            <field name="arch" type="xml">
+                <tree string="Recruitment request">
+                    <field name="name"/>
+                    <field name="request_by"/>
+                    <field name="company_id"/>
+                    <field name="department_id"/>
+                    <field name="job_id"/>
+                    <field name="date_needs"/>
+                    <field name="number_of_recruits"/>
+                    <field name="number_of_applicants"/>
+                    <field name="number_of_recruited"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hr_recruitment_request_act" model="ir.actions.act_window">
+            <field name="name">Recruitment request</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.request</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="recruitment_request_menu" name="Recruitment request" parent="hr_recruitment.menu_hr_recruitment_root"
+                  action="hr_recruitment_request_act" sequence="2"/>
+    </data>
+</odoo>

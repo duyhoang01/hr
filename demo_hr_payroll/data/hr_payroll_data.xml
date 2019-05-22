@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="GTTCN" model="hr.salary.rule.category">
+            <field name="name">Giảm trừ thuế cá nhân</field>
+            <field name="code">GTTCN</field>
+        </record>
+        <record id="TNTT" model="hr.salary.rule.category">
+            <field name="name">Thu nhập tính thuế</field>
+            <field name="code">TNTT</field>
+        </record>
+        <record id="TTNCN" model="hr.salary.rule.category">
+            <field name="name">Thuế thu nhập cá nhân</field>
+            <field name="code">TTNCN</field>
+        </record>
+
+        <record id="hr_rule_luong" model="hr.salary.rule">
+            <field name="name">Lương</field>
+            <field name="sequence" eval="1"/>
+            <field name="code">WAGE</field>
+            <field name="category_id" ref="hr_payroll.BASIC"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.wage / inputs.NCTT.amount * inputs.SNC.amount</field>
+        </record>
+        <record id="hr_rule_bhxh" model="hr.salary.rule">
+            <field name="name">Bảo hiểm xã hội</field>
+            <field name="sequence" eval="3"/>
+            <field name="code">BHXH</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.wage * 8 / 100</field>
+        </record>
+        <record id="hr_rule_bhyt" model="hr.salary.rule">
+            <field name="name">Bảo hiểm y tế</field>
+            <field name="sequence" eval="3"/>
+            <field name="code">BHYT</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.wage * 1.5 / 100</field>
+        </record>
+        <record id="hr_rule_bhtn" model="hr.salary.rule">
+            <field name="name">Bảo hiểm thất nghiệp</field>
+            <field name="sequence" eval="4"/>
+            <field name="code">BHTN</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.wage * 1 / 100</field>
+        </record>
+        <record id="hr_rule_ttn" model="hr.salary.rule">
+            <field name="name">Tổng thu nhập</field>
+            <field name="sequence" eval="5"/>
+            <field name="code">TTN</field>
+            <field name="category_id" ref="hr_payroll.GROSS"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.BASIC + categories.ALW - categories.DED</field>
+        </record>
+        <record id="hr_rule_gttcn" model="hr.salary.rule">
+            <field name="name">Giảm trừ thuế cá nhân</field>
+            <field name="sequence" eval="6"/>
+            <field name="code">GTTCN</field>
+            <field name="category_id" ref="demo_hr_payroll.GTTCN"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">fix</field>
+            <field eval="9000000" name="amount_fix"/>
+            <field name="quantity">1</field>
+        </record>
+        <record id="hr_rule_gtpt" model="hr.salary.rule">
+            <field name="name">Giảm trừ phục thuộc</field>
+            <field name="sequence" eval="7"/>
+            <field name="code">GTPT</field>
+            <field name="category_id" ref="demo_hr_payroll.GTTCN"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = 3600000 * contract.employee_id.children</field>
+        </record>
+        <record id="hr_rule_tntt" model="hr.salary.rule">
+            <field name="name">Thu nhập tính thuế TNCN</field>
+            <field name="sequence" eval="8"/>
+            <field name="code">TNTT</field>
+            <field name="category_id" ref="demo_hr_payroll.TNTT"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+                if categories.GROSS > categories.GTTCN:
+                    result = categories.GROSS - categories.GTTCN
+                else:
+                    result = 0
+            </field>
+        </record>
+        <record id="hr_rule_ttncn" model="hr.salary.rule">
+            <field name="name">Thuế thu nhập cá nhân</field>
+            <field name="sequence" eval="9"/>
+            <field name="code">TTNCN</field>
+            <field name="category_id" ref="demo_hr_payroll.TTNCN"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+            if (categories.TNTT &lt;= 5000000) and (categories.TNTT > 0):
+                result = 0.05 *  categories.TNTT
+            elif (categories.TNTT > 5000000) and (categories.TNTT &lt;= 10000000):
+                result = 0.1 *  categories.TNTT - 250000
+            elif (categories.TNTT > 10000000) and (categories.TNTT &lt;= 18000000):
+                result = 0.15 *  categories.TNTT - 750000
+            elif (categories.TNTT > 18000000) and (categories.TNTT &lt;= 32000000):
+                result = 0.2 *  categories.TNTT - 1650000
+            elif (categories.TNTT > 32000000) and (categories.TNTT &lt;= 52000000):
+                result = 0.25 * categories.TNTT - 3250000
+            elif (categories.TNTT > 52000000) and (categories.TNTT &lt;= 80000000):
+                result = 0.3 * categories.TNTT - 5850000
+            elif categories.TNTT > 80000000:
+                result = 0.35 *  categories.TNTT - 9850000
+            else:
+                result = 0
+            </field>
+        </record>
+        <record id="hr_rule_tl" model="hr.salary.rule">
+            <field name="name">Thực lĩnh</field>
+            <field name="sequence" eval="10"/>
+            <field name="code">TL</field>
+            <field name="category_id" ref="hr_payroll.NET"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.GROSS - categories.TTNCN</field>
+        </record>
+        <record id="hr_rule_com_bhxh" model="hr.salary.rule">
+            <field name="name">BHXH doanh nghiệp đóng</field>
+            <field name="sequence" eval="11"/>
+            <field name="code">COM_BHXH</field>
+            <field name="category_id" ref="hr_payroll.COMP"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.wage * 18 / 100</field>
+            <field name="appears_on_payslip" eval="False"/>
+        </record>
+        <record id="hr_rule_com_bhyt" model="hr.salary.rule">
+            <field name="name">BHYT doanh nghiệp đóng</field>
+            <field name="sequence" eval="12"/>
+            <field name="code">COM_BHYT</field>
+            <field name="category_id" ref="hr_payroll.COMP"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.wage * 3 / 100</field>
+            <field name="appears_on_payslip" eval="False"/>
+        </record>
+        <record id="hr_rule_com_bhtn" model="hr.salary.rule">
+            <field name="name">BHTN doanh nghiệp đóng</field>
+            <field name="sequence" eval="13"/>
+            <field name="code">COM_BHTN</field>
+            <field name="category_id" ref="hr_payroll.COMP"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.wage * 1 / 100</field>
+            <field name="appears_on_payslip" eval="False"/>
+        </record>
+
+    </data>
+</odoo>
