@@ -12,10 +12,12 @@
             
     """,
     'summary': """""",
-    'depends': ['base', 'hr_recruitment'],
+    'depends': ['base', 'hr', 'hr_recruitment'],
     'data': [
         # 'security/ir.model.access.csv',
+        'security/data_group.xml',
         # 'views/hr_recruitment_request.xml',
+        'views/hr_job_view.xml',
      ],
     'demo': [],
     'qweb': [],

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hr_demo_security" model="ir.module.category">
+            <field name="name">HR</field>
+            <field name="sequence" eval="1"/>
+        </record>
+
+        <record id="hr_emloyee" model="res.groups">
+            <field name="name">Nhân viên nhân sự</field>
+            <field name="category_id" ref="demo_hr_recruitment.hr_demo_security"/>
+        </record>
+        <record id="manager_emloyee" model="res.groups">
+            <field name="name">Quản lý bộ phận/phòng ban</field>
+            <field name="category_id" ref="demo_hr_recruitment.hr_demo_security"/>
+        </record>
+        <record id="director_emloyee" model="res.groups">
+            <field name="name">Ban giám đốc</field>
+            <field name="category_id" ref="demo_hr_recruitment.hr_demo_security"/>
+        </record>
+    </data>
+</odoo>
