@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="time_sheet_act" model="ir.actions.act_window">
+            <field name="name">Bảng chấm công</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">time.sheet</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="hr_employee_time_sheet_tree_view" model="ir.ui.view">
+            <field name="name">hr_employee_time_sheet_tree_view</field>
+            <field name="model">time.sheet</field>
+            <field name="arch" type="xml">
+                <tree string="Bảng chấm công">
+                    <field name="date"/>
+                    <field name="weekdays"/>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="checkin_1"/>
+                    <field name="checkout_1"/>
+                    <field name="checkin_2"/>
+                    <field name="checkout_2"/>
+                    <field name="time_total"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hr_employee_time_sheet_form_view" model="ir.ui.view">
+            <field name="name">hr_employee_time_sheet_form_view</field>
+            <field name="model">time.sheet</field>
+            <field name="arch" type="xml">
+                <form string="Bảng chấm công">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="employee_id"/>
+                                <!--<field name="employee_name"/>-->
+                                <field name="department_id"/>
+                                <field name="position"/>
+                            </group>
+                            <group>
+                                <field name="date"/>
+                                <field name="weekdays"/>
+                                <field name="checkin_1"/>
+                                <field name="checkout_1"/>
+                                <field name="checkin_2"/>
+                                <field name="checkout_2"/>
+                                <field name="time_total"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <menuitem id="time_sheet_menu" name="Bảng chấm công" parent="hr.menu_hr_root" action="time_sheet_act" sequence="30"/>
+    </data>
+</odoo>

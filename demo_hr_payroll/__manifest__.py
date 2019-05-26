@@ -16,6 +16,7 @@
     'data': [
         # 'security/ir.model.access.csv',
         'data/hr_payroll_data.xml',
+        # 'views/hr_payslip_views.xml',
      ],
     'demo': [],
     'qweb': [],

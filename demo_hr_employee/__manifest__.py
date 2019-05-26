@@ -12,11 +12,13 @@
             
     """,
     'summary': """""",
-    'depends': ['base', 'mail'],
+    'depends': ['base', 'mail', 'hr'],
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         # 'views/mail_channel_views.xml',
         'views/res_partner_views.xml',
+        'views/time_sheet_views.xml',
+        'views/hr_employee_views.xml',
      ],
     'demo': [],
     'qweb': [],
