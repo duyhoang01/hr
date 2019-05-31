@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="rfa_recruitment_requirements" model="mail.template">
+            <field name="name">HR: Request for approval of recruitment requirements</field>
+            <field name="subject">gf</field>
+            <!--<field name="email_from">${user.partner_id.email}</field>                                                                                                                                                     </field>&ndash;&gt;-->
+            <field name="email_to">${(not object.hr_responsible_id and object.hr_responsible_id.login)|safe}</field>
+            <field name="model_id" ref="hr.model_hr_job"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html">
+                <![CDATA[
+                       <p>Chào Anh/Chị</p>
+                       <p>Nhân viên ${user.name or ''} vừa tạo một vị trí tuyển dụng mới: ${object.name or ''}. Vui lòng vào link để phê duyệt:</p>
+                       <a href="${object.get_url_mail() or ''}">
+                            ${object.get_url_mail() or ''}
+                       </a>
+                     ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

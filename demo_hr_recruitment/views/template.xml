@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="message_user_required">
+            <p>Dear <t t-esc="object.approvers_id.sudo().name"/>,</p>
+            <p>Bạn được yêu cầu phê duyệt một Vị trí tuyển dụng mới: <strong>
+                <!--<t t-esc="object._description.lower()"/>-->
+                <t t-esc="object.name_get()[0][1]"/></strong>.</p>
+            <p>Click vào button <strong>View Job Position</strong> để xem chi tiết</p>
+            <p>
+                <a t-att-href="'/mail/view?model=%s&amp;res_id=%s' % (object._name, object.id)"
+                        style="background-color: #9E588B; margin-top: 10px; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;">
+                    View <t t-esc="object._description.lower()"/>
+                </a>
+            </p>
+            <p style="color:#9E588B;">Powered by <a target="_blank" href="#">Đồ án: Nguyễn Công Giang</a>.</p>
+        </template>
+        <template id="message_user_approve_required_for_hr_resp">
+            <p>Dear <t t-esc="object.hr_responsible_id.sudo().name"/>,</p>
+            <p>Một Vị trí tuyển dụng mới đã được phê duyệt. Bạn hãy bắt đầu tuyển dụng.<strong>
+                <!--<t t-esc="object._description.lower()"/>-->
+                <t t-esc="object.name_get()[0][1]"/></strong>.</p>
+            <p>Click vào button <strong>View Job Position</strong> để xem chi tiết</p>
+            <p>
+                <a t-att-href="'/mail/view?model=%s&amp;res_id=%s' % (object._name, object.id)"
+                        style="background-color: #9E588B; margin-top: 10px; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;">
+                    View <t t-esc="object._description.lower()"/>
+                </a>
+            </p>
+            <p style="color:#9E588B;">Powered by <a target="_blank" href="#">Đồ án: Nguyễn Công Giang</a>.</p>
+        </template>
+        <template id="message_user_approve_required_for_recuit_resp">
+            <p>Dear <t t-esc="object.user_id.sudo().name"/>,</p>
+            <p>Vị trí tuyển dụng của bạn đã được phê duyệt: <strong>
+                <!--<t t-esc="object._description.lower()"/>-->
+                <t t-esc="object.name_get()[0][1]"/></strong>.</p>
+            <p>Click vào button <strong>View Job Position</strong> để xem chi tiết</p>
+            <p>
+                <a t-att-href="'/mail/view?model=%s&amp;res_id=%s' % (object._name, object.id)"
+                        style="background-color: #9E588B; margin-top: 10px; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;">
+                    View <t t-esc="object._description.lower()"/>
+                </a>
+            </p>
+            <p style="color:#9E588B;">Powered by <a target="_blank" href="#">Đồ án: Nguyễn Công Giang</a>.</p>
+        </template>
+        <template id="message_user_refuse">
+            <p>Dear <t t-esc="object.user_id.sudo().name"/>,</p>
+            <p>Vị trí tuyển dụng của bạn đã bị từ chối: <strong>
+                <t t-esc="object.name_get()[0][1]"/></strong>.</p>
+            <p>Click vào button <strong>View Job Position</strong> để xem chi tiết</p>
+            <p>
+                <a t-att-href="'/mail/view?model=%s&amp;res_id=%s' % (object._name, object.id)"
+                        style="background-color: #9E588B; margin-top: 10px; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;">
+                    View <t t-esc="object._description.lower()"/>
+                </a>
+            </p>
+            <p style="color:#9E588B;">Powered by <a target="_blank" href="#">Đồ án: Nguyễn Công Giang</a>.</p>
+        </template>
+        <template id="invite_manager">
+            <p>Dear <t t-esc="object.user_id.sudo().name"/>,</p>
+            <p>Bạn có một lời mời tham dự phỏng vấn: <strong>
+                <t t-esc="object.name_get()[0][1]"/></strong>.</p>
+            <p>Click vào button <strong>View Applicant</strong> để xem chi tiết</p>
+            <p>
+                <a t-att-href="'/mail/view?model=%s&amp;res_id=%s' % (object._name, object.id)"
+                        style="background-color: #9E588B; margin-top: 10px; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;">
+                    View <t t-esc="object._description.lower()"/>
+                </a>
+            </p>
+            <p style="color:#9E588B;">Powered by <a target="_blank" href="#">Đồ án: Nguyễn Công Giang</a>.</p>
+        </template>
+    </data>
+</odoo>

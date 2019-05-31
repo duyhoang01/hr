@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hr_job_form_view_inherit" model="ir.ui.view">
+            <field name="name">hr.job.form.view.inherit</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr.view_hr_job_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//header" position="inside">
+                    <button name="action_request_approve" string="Yêu cầu giám đốc duyệt" class="oe_highlight"
+                            states="draft" type="object" groups="demo_hr_recruitment.hr_emloyee"/>
+                    <button name="action_approve" string="GĐ Duyệt" states="waiting_for_approval" class="oe_highlight"
+                            type="object" groups="demo_hr_recruitment.director_emloyee"/>
+                    <button name="action_cancel" string="Hủy" states="waiting_for_approval" type="object"
+                            groups="demo_hr_recruitment.director_emloyee"/>
+                </xpath>
+                <xpath expr="//field[@name='hr_responsible_id']" position="after">
+                    <field name="approvers_id"/>
+                    <field name="need_director_to_participate"/>
+                </xpath>
+                <xpath expr="//header/field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,waiting_for_approval,recruit,open,cancel"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

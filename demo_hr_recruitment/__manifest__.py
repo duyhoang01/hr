@@ -9,14 +9,19 @@
     'category': 'Uncategorized',
     'sequence': 1,
     'description': """
-            
+
     """,
     'summary': """""",
-    'depends': ['base', 'hr_recruitment'],
+    'depends': ['base', 'hr', 'hr_recruitment', 'mail'],
     'data': [
         # 'security/ir.model.access.csv',
+        'security/data_group.xml',
+        'views/template.xml',
+        'views/hr_job_view.xml',
+        'views/hr_recruitment_stage_views.xml',
+        'views/hr_applicant_views.xml',
         # 'views/hr_recruitment_request.xml',
-     ],
+    ],
     'demo': [],
     'qweb': [],
     'auto_install': False,
